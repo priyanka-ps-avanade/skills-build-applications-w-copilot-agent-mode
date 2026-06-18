@@ -1,20 +1,31 @@
 import express from 'express';
-import mongoose from 'mongoose';
+import apiRouter from './routes/api';
+import { connectDatabase } from './db';
 
 const app = express();
-const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/octofit';
+const PORT = Number(process.env.PORT || 8000);
+const CODESPACE_NAME = process.env.CODESPACE_NAME;
+const API_BASE_URL = CODESPACE_NAME
+  ? `https://${CODESPACE_NAME}-8000.githubpreview.dev`
+  : `http://localhost:${PORT}`;
 
 app.use(express.json());
+app.use('/api', apiRouter);
 
 app.get('/', (_req, res) => {
-  res.send('OctoFit Tracker API is running');
+  res.json({
+    status: 'OctoFit Tracker API is running',
+    apiBaseUrl: API_BASE_URL,
+  });
 });
 
-mongoose
-  .connect(MONGO_URI)
+app.use((_req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+connectDatabase()
   .then(() => {
-    console.log('Connected to MongoDB');
+    console.log(`API base URL: ${API_BASE_URL}`);
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
