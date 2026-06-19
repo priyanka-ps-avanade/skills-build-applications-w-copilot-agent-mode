@@ -22,6 +22,7 @@ export default function Users({ apiBaseUrl }) {
       setLoading(false)
       return
     }
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/users
     const url = `https://${codespaceName}-8000.app.github.dev/api/users`
     fetch(url)
       .then((response) => {

@@ -22,6 +22,7 @@ export default function Workouts({ apiBaseUrl }) {
       setLoading(false)
       return
     }
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts
     const url = `https://${codespaceName}-8000.app.github.dev/api/workouts`
     fetch(url)
       .then((response) => {

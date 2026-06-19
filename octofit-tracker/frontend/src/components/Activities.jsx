@@ -22,6 +22,7 @@ export default function Activities({ apiBaseUrl }) {
       setLoading(false)
       return
     }
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities
     const url = `https://${codespaceName}-8000.app.github.dev/api/activities`
     fetch(url)
       .then((response) => {

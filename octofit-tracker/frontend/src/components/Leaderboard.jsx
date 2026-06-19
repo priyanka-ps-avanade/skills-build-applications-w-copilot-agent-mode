@@ -22,6 +22,7 @@ export default function Leaderboard({ apiBaseUrl }) {
       setLoading(false)
       return
     }
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard
     const url = `https://${codespaceName}-8000.app.github.dev/api/leaderboard`
     fetch(url)
       .then((response) => {
