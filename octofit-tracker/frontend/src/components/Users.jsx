@@ -16,6 +16,7 @@ export default function Users({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/users
     const url = `${apiBaseUrl}/users`
     fetch(url)
       .then((response) => {

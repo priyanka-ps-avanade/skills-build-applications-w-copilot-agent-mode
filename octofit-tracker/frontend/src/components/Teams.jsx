@@ -16,6 +16,7 @@ export default function Teams({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams
     const url = `${apiBaseUrl}/teams`
     fetch(url)
       .then((response) => {

@@ -15,7 +15,8 @@ export default function Leaderboard({ apiBaseUrl }) {
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() {
+  useEffect(() => {
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard
     const url = `${apiBaseUrl}/leaderboard`
     fetch(url)
       .then((response) => {

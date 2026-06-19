@@ -16,6 +16,7 @@ export default function Activities({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities
     const url = `${apiBaseUrl}/activities`
     fetch(url)
       .then((response) => {

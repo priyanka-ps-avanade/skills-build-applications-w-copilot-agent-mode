@@ -16,6 +16,7 @@ export default function Workouts({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts
     const url = `${apiBaseUrl}/workouts`
     fetch(url)
       .then((response) => {
