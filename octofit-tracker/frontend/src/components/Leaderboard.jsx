@@ -16,8 +16,13 @@ export default function Leaderboard({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard
-    const url = `${apiBaseUrl}/leaderboard`
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+    if (!codespaceName) {
+      setError('API configuration error: VITE_CODESPACE_NAME not set')
+      setLoading(false)
+      return
+    }
+    const url = `https://${codespaceName}-8000.app.github.dev/api/leaderboard`
     fetch(url)
       .then((response) => {
         if (!response.ok) throw new Error(`Failed to fetch leaderboard (${response.status})`)
@@ -26,7 +31,7 @@ export default function Leaderboard({ apiBaseUrl }) {
       .then((data) => setLeaderboard(normalizeData(data)))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [apiBaseUrl])
+  }, [])
 
   return (
     <section>

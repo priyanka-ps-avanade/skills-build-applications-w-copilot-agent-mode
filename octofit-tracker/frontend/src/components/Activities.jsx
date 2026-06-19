@@ -16,8 +16,13 @@ export default function Activities({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities
-    const url = `${apiBaseUrl}/activities`
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+    if (!codespaceName) {
+      setError('API configuration error: VITE_CODESPACE_NAME not set')
+      setLoading(false)
+      return
+    }
+    const url = `https://${codespaceName}-8000.app.github.dev/api/activities`
     fetch(url)
       .then((response) => {
         if (!response.ok) throw new Error(`Failed to fetch activities (${response.status})`)
@@ -26,7 +31,7 @@ export default function Activities({ apiBaseUrl }) {
       .then((data) => setActivities(normalizeData(data)))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [apiBaseUrl])
+  }, [])
 
   return (
     <section>

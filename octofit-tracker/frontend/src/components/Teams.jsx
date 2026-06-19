@@ -16,8 +16,13 @@ export default function Teams({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams
-    const url = `${apiBaseUrl}/teams`
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+    if (!codespaceName) {
+      setError('API configuration error: VITE_CODESPACE_NAME not set')
+      setLoading(false)
+      return
+    }
+    const url = `https://${codespaceName}-8000.app.github.dev/api/teams`
     fetch(url)
       .then((response) => {
         if (!response.ok) throw new Error(`Failed to fetch teams (${response.status})`)
@@ -26,7 +31,7 @@ export default function Teams({ apiBaseUrl }) {
       .then((data) => setTeams(normalizeData(data)))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [apiBaseUrl])
+  }, [])
 
   return (
     <section>

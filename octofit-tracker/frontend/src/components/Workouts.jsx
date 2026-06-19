@@ -16,8 +16,13 @@ export default function Workouts({ apiBaseUrl }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // API endpoint: https://${VITE_CODESPACE_NAME}-8000.app.github.dev/api/workouts
-    const url = `${apiBaseUrl}/workouts`
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME
+    if (!codespaceName) {
+      setError('API configuration error: VITE_CODESPACE_NAME not set')
+      setLoading(false)
+      return
+    }
+    const url = `https://${codespaceName}-8000.app.github.dev/api/workouts`
     fetch(url)
       .then((response) => {
         if (!response.ok) throw new Error(`Failed to fetch workouts (${response.status})`)
@@ -26,7 +31,7 @@ export default function Workouts({ apiBaseUrl }) {
       .then((data) => setWorkouts(normalizeData(data)))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
-  }, [apiBaseUrl])
+  }, [])
 
   return (
     <section>
